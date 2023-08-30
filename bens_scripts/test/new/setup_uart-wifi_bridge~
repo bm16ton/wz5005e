@@ -1,0 +1,12 @@
+#!/bin/bash
+if [ $# -ne 2 ]
+then
+echo "USAGE: setup_uart_wifi_bridge IP-ADDRESS TTY"
+echo " EXAMPLE;  setup_uart_wifi_bridge  192.168.1.220 /dev/tty63"
+exit
+return
+fi
+$(sleep 4 ; sudo chmod aou+wrx $2 ; stty -F $2 raw ; stty -F $2 9600 ; stty -F $2 -isig -icanon -echo) &
+echo "connecting $1 to $2"
+sudo socat PTY,link=$2 TCP:$1:23 &
+

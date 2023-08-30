@@ -1,0 +1,39 @@
+Seems like their are differences between firmwares. Some models come with 3 connection options in setting esp8266/serial/modbus i think they are. Im not sure if thats only on models with builtin AC to DC or not. But you say yours disabled the buttons etc when connecting via serial and mine doesnt. I rednecked my way thru this one.
+
+to start comms after removing power, i send;
+aa 01 20 01 00 00 00 00
+00 00 00 00 00 00 00 00
+00 00 00 cc
+
+aa 01 20 01 00 00 00 00
+00 00 00 00 00 00 00 00
+00 00 00 cc
+
+I hafta send it twice but after that all is good. The crc is add all the hex and divide by hex 0x100, example so if i create a file say from a bash script called set-to-5v-hex-6a to set it to 5v etc. and it contains
+
+AA 01 2C 13 88 12 AB 01
+f4 00 04 00 00 00 42 00
+00 00 00
+
+id do;
+#!/bin/bash
+
+cat set-to-5v-hex-6a | tr [a-z] [A-Z] | tr '\n' ' ' | xargs > pooma # all 1 line, rm trail spaces, all caps etc
+sed -i 's/ /+/g' pooma # replace the spaces with +
+echo "expecting 6a"
+POOP=$(echo "obase=16;ibase=16;$(cat pooma)" | bc) ; echo ${POOP: -2} #dirty hack instead of doing the divide
+
+This is a bastard child of modbus, which is why you set an address on a serial interface, but its really not. I simply use basic commands for example.
+
+stty -F /dev/tty6USB0 raw
+stty -F /dev/ttyUSB0 9600
+stty -F /dev/ttyUSB0 -isig -icanon -echo
+sudo chmod aou+wrx /dev/ttyUSB0
+xxd -r -p setup > /dev/ttyUSB0 # file setup containing the aformentioned startup hex strings same command for config file
+
+and to read
+cat /dev/ttyUSB0 | xxd -l 128 -c 10 -ps
+
+Sum notes for anyone stumbling upon this, Not all usb to ttl serial adapters initialize in the same config, sum like ftdi devices will most likely work as raw with cat etc. pl2xxxx in general need the stty commands, and some cant do raw mode worth a damn. The null bytes dont get passed doing normal writes to /dev/tty* , also if using an esp8266 or esp32 as a passthru in arduino make sure to add the BIN to your serial.write command.
+
+I have a esp8266 and esp32 sketch for passthru and ill hopefully getting around to writing a gui wrapper for the commands using gtkdialog someday soon. Anyway awesome to see someone else working on this! I think we are the only two!

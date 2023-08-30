@@ -1,0 +1,12 @@
+#!/bin/bash
+if [ $# -ne 1 ]
+then
+echo "USAGE: initialize-uart-wz5005 TTY"
+echo " EXAMPLE;  initialize-uart-wz5005 /dev/tty63"
+exit
+return
+fi
+xxd -r -p setup-hex > $1
+sleep 1
+xxd -r -p setup-hex > $1
+

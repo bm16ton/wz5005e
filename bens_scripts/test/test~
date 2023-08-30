@@ -1,0 +1,24 @@
+#!/bin/bash
+
+cat set-to-4v-hex-06 | tr '\n' ' ' > pooma1  									# put into one line
+cat pooma1 | xargs > pooma2													# remove trailing spaces
+sed -i 's/ /+/g' pooma2														# replace spaces wiyj +
+POOP=$(echo "obase=16;ibase=16;$(cat pooma2)" | bc) ; echo ${POOP: -2}      # addem together and hack a divide
+echo "expected 06"
+cat set-to-5v-hex-6a | tr '\n' ' [a-z] [A-Z]' > pooma1  									# put into one line
+cat pooma1 | xargs > pooma2													# remove trailing spaces
+sed -i 's/ /+/g' pooma2														# replace spaces wiyj +
+# tr [a-z] [A-Z] < pooma2 > pooma3
+POOP=$(echo "obase=16;ibase=16;$(cat pooma3)" | bc) ; echo ${POOP: -2}      # addem together and hack a divide
+echo "expected 6a"
+cat set-to-7v-hex-33 | tr '\n' ' ' > pooma1  									# put into one line
+cat pooma1 | xargs > pooma2													# remove trailing spaces
+sed -i 's/ /+/g' pooma2														# replace spaces wiyj +
+POOP=$(echo "obase=16;ibase=16;$(cat pooma2)" | bc) ; echo ${POOP: -2}      # addem together and hack a divide
+echo "expected 33"
+cat set-to-9v-hex-FC | tr '\n' ' ' > pooma1  									# put into one line
+cat pooma1 | xargs > pooma2													# remove trailing spaces
+sed -i 's/ /+/g' pooma2														# replace spaces wiyj +
+POOP=$(echo "obase=16;ibase=16;$(cat pooma2)" | bc) ; echo ${POOP: -2}      # addem together and hack a divide
+echo "expected FC"
+

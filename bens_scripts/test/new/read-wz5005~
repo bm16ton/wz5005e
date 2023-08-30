@@ -1,0 +1,58 @@
+#!/bin/bash
+if [ $# -ne 1 ]
+then
+echo "USAGE: read-wz5005 TTY"
+echo " EXAMPLE;  read-wz5005 /dev/tty63"
+exit
+return
+fi
+
+echo "" > /tmp/wz5005
+#readwz(){
+#while read -r line ; do
+#echo $line
+#done < <(cat $1)
+#}
+#readwz &
+bash -c "cat $1 | xxd -l 128 -c 10 -ps | grep -A1 aa > /tmp/wz5005" &
+
+bgPid=$!
+
+#sleep .1
+xxd -r -p read-hex > $1
+#sleep .3
+kill $bgPid
+kill $(ps aux | grep "cat /dev/tty" | grep -v grep | awk '{print $2}') 2> /dev/null
+#cat /tmp/wz5005
+echo -n "Volts="
+echo -n $(convert-hex-2-dec $(cat /tmp/wz5005 | grep aa   | sed 's/^..............//' |  sed 's/..$//') | rev | sed 's/^../&./' | rev)
+cat /tmp/wz5005 | tr [a-z] [A-Z] | tr '\n' ' ' | sed 's/ //g' | xargs > /tmp/wzamps
+#cat /tmp/wzamps
+echo -n " MaxAmps="
+echo -n $(convert-hex-2-dec $(cat /tmp/wzamps | sed 's/^..................//' |  sed 's/..................$//') | rev | sed 's/^.../&./' | rev)
+#echo -n " OVP="
+#echo -n $(convert-hex-2-dec $(cat /tmp/wzamps | sed 's/^..............//' |  sed 's/......................$//') | rev | sed 's/^.../&./' | rev)
+echo -n " OCP="
+echo -n $(convert-hex-2-dec $(cat /tmp/wz5005 | grep aa   | sed 's/^..........//' |  sed 's/......$//') | rev | sed 's/^.../&./' | rev)
+
+bash -c "cat $1 | xxd -l 128 -c 10 -ps > /tmp/wzpow" &
+bgPid2=$!
+#sleep .2
+xxd -r -p read-on_off-cv_cc-hex > $1
+#sleep .1
+kill $bgPid2
+kill $(ps aux | grep "cat /dev/tty" | grep -v grep | awk '{print $2}') 2> /dev/null
+#echo ""
+#sed -i 's/ //g' /tmp/wzpow
+POW=$(cat /tmp/wzpow | grep -i aa01 | sed 's/^.......//'  |  sed 's/............$//')
+echo -n " Power="
+# | sed 's/^.............//' |  sed 's/...$//'
+#echo -n " Power="
+
+
+if [ "$POW" = "1" ]; then
+    echo -n "On"
+else
+    echo -n "Off"
+fi
+echo ""

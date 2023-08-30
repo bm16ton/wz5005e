@@ -1,0 +1,38 @@
+Thanks again. I was able to get it working at 9600 8N1.
+
+Notes:
+– UART pin labels (RX/TX) are opposite from what I expected. The pin labelled RX is actually the TX pin on the MCU and vice versa.
+– Commands must be prefixed with a colon. This is a bit unclear in the document.
+– Auto power-on state doesn’t read properly. It always returns 0, indicating that auto power-on is disabled.
+
+Example communication:
+
+:wo0
+#wook
+:wo1
+#wook
+:wu1000
+#wuok
+:wi0100
+#wiok
+:wl1
+#wlok
+:wl0
+#wlok
+:ru
+#ru00000001000
+:ri
+#ri00000000000
+:rt
+#rt00000000003
+:rc
+#rc00000000000
+:rv
+#rv00000001000
+:ra
+#ra00000000100
+:ro
+#ro00000000001
+
+
+I’ve written commands to the buck converter and it reads them. When I send “:wu0700\r\n” as bytes it sets the voltage to 7 V, however, I am still not able to read any feedback (as far as I can tell). Like in the example, I haven’t been able to read in “#wuok”.

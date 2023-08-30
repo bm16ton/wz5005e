@@ -1,0 +1,28 @@
+cat pooma | xxd -b | awk '{print $2} {print $3} {print $4} {print $5} {print $6} {print $7}' > pooma1
+sed -i 's/ /+/g' pooma1
+sed -i 's/^ *//; s/ *$//; /^$/d' pooma1 > pooma2
+paste -s -d +  pooma1 > pooma2
+
+echo "ibase=2;obase=2; $(cat pooma2)" | bc -l
+AA+01+2C+13+88+12+AB+01+f4+00+04+00+00+00+42+00+00+00+00
+AA+01+2C+13+88+12+AB+02+BC+00+04+00+00+00+42+00+00+00+00
+POOP=$(echo "obase=16;ibase=16;$(cat pooma2)" | bc) ; printf %X $((0x$POOP / 256))
+
+paste -s set-to-7v-hex > pooma1
+echo "obase=16;ibase=16;$(cat pooma2)" | bc
+  cat pooma1 | xargs > pooma2
+#!/bin/bash
+
+cat set-to-5v-hex-6a | tr '\n' '[a-z] [A-Z]' > pooma 									# put into one line
+												# remove trailing spaces
+sed -i 's/ /+/g' pooma													# replace spaces wiyj +
+POOP=$(echo "obase=16;ibase=16;$(cat pooma)" | bc) ; echo ${POOP: -2}      # addem together and hack a divide 																				# by 0x256 using just the last two digits
+
+#####################  WORKS ############################
+
+#!/bin/bash
+
+cat set-to-5v-hex-6a | tr [a-z] [A-Z] | tr '\n' ' ' | xargs > pooma
+sed -i 's/ /+/g' pooma
+echo "expecting 6a"
+POOP=$(echo "obase=16;ibase=16;$(cat pooma)" | bc) ; echo ${POOP: -2}

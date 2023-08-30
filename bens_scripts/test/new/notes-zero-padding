@@ -1,0 +1,73 @@
+awk '{printf "%04s\n", $0}' tmp
+ 1F4
+awk '{printf "%03s\n", $0}' tmp
+1F4
+awk '{printf "%05s\n", $0}' tmp
+  1F4
+awk '{printf "%04s\n", $0}' tmp
+ 1F4
+awk '{printf "%04s\n", 0}' tmp
+   0
+awk '{printf "%04s\n", $0}' tmp
+ 1F4
+awk '{printf "%08s\n", $0}' tmp
+     1F4
+awk '{printf "%04s\n", $0}' tmp
+ 1F4
+awk '{printf "%04s\n", $}' tmp
+awk: cmd. line:1: {printf "%04s\n", $}
+awk: cmd. line:1:                    ^ syntax error
+awk '{printf "%04s\n", $0}' tmp
+ 1F4
+cat tmp | awk '{printf "%04s\n", $0}'
+ 1F4
+cat tmp | awk '{printf "%02s\n",$0}'
+1F4
+cat tmp | awk '{printf "%04s\n",$0}'
+ 1F4
+"/" > cat tmp | awk '{printf "%04s\n",$0}'
+bash: /: Is a directory
+awk '{printf "%04s\n", $0}' tmp
+ 1F4
+awk '{printf "%04d\n", $0}' tmp
+0001
+awk '{printf "%04s\n", $0}' tmp
+ 1F4
+awk '{printf "%04g\n", $0}' tmp
+0001
+awk '{printf "%04x\n", $0}' tmp
+0001
+awk '{printf "%04\n", $0}' tmp
+%04
+awk '{printf "%04w\n", $0}' tmp
+%04w
+awk '{printf "%04x\n", $0}' tmp
+0001
+awk '{printf "%04s\n", $0}' tmp
+ 1F4
+printf "%04s\n", $0}
+bash}
+,printf "%04s\n", $0
+bash
+,cat tmp | printf "%04s\n", $0
+bash
+printf "%.8d\n" $(<tmp)
+bash: printf: 1F4: invalid number
+00000001
+printf "%.8x\n" $(<tmp)
+bash: printf: 1F4: invalid number
+00000001
+printf "%.8s\n" $(<tmp)
+1F4
+printf "%.4s\n" $(<tmp)
+1F4
+printf "%04s\n" $(<tmp)
+ 1F4
+printf "%'0'4s\n" $(<tmp)
+ 1F4
+printf "%05d\n" 1F4
+bash: printf: 1F4: invalid number
+00001
+printf "%05s\n" 1F4
+  1F4
+

@@ -1,0 +1,8 @@
+q#!/bin/bash
+
+cat read-output-hex | tr [a-z] [A-Z] | tr '\n' ' ' | xargs > pooma
+sed -i 's/ /+/g' pooma
+echo "expecting f1"
+POOP=$(echo "obase=16;ibase=16;$(cat pooma)" | bc) ; echo ${POOP: -2}
+
+

@@ -1,0 +1,15 @@
+#!/bin/bash
+if [ $# -ne 2 ]
+then
+echo "USAGE: send-hex-file HEXFILE TTY"
+echo " EXAMPLE;  send-hex on-hex /dev/tty63"
+exit
+return
+fi
+bash -c "cat $1 | xxd -l 128 -c 10 -ps > /tmp/wz5005" &
+bgPid=$!
+sleep .9
+xxd -r -p $1 > $2
+sleep .3
+kill $(ps aux | grep "cat /dev/tty" | grep -v grep | awk '{print $2}') 2> /dev/null
+cat /tmp/wz5005

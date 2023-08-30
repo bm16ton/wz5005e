@@ -1,0 +1,37 @@
+Here is a protocol for your reference.
+1, write commands
+(1) wu command (set the output voltage range of power supply 0000-6000)
+The format is: awuxxxx + 0x0d + 0x0a)
+“xxxx” is voltage set point, for example
+awu1234 indicates that the output voltage is set to 12.34V
+awu0123 indicates that the output voltage is set to 01.23V
+(2) wi command (set the output current range of power supply 0000-0800)
+The format is: awixxxx + 0x0d + 0x0a
+“xxxx” is the current set point, for example
+: awi0100 indicates the set output current value is 01.00A
+: awi0799 that set the output current is 07.99A
+(3) wo command (turn on or off power output)
+The format is: awox + 0x0d + 0x0a
+“x” represents the module output state, for example
+: awo1 said to turn on the output
+: awo0 means to close the output
+(4) wl command (turn on or off the lock function)
+The format is: wlx + 0x0d + 0x0a
+“x” indicates the module lock status, for example
+: awl1 means to turn on the lock function
+: awl0 means to turn off the lock function
+(5) wm command (call out parameters, 0-9 address bits)
+The format is: awmx + 0x0d + 0x0a
+“x” represents the address of the calling parameter, for example
+: awm0 is to call out the parameters of 0 address bits
+: awm9 is to call out the parameters of 9 address bits
+ron
+December 24, 2017 at 11:12 pm
+Post count: 0
+
+u command（read the actual output voltage）
+The format is: aru+0x0d+0x0a
+For example, #ru00000000488 it means the actual output voltage is 4.88V
+ri command (read the actual output current)
+The format is: ari+0x0d+0x0a
+For example, #ri00000000087, it means the actual output current is 0.87A

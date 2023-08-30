@@ -1,0 +1,13 @@
+#!/bin/bash
+if [ $# -ne 1 ]
+then
+echo "USAGE: findcrc filename"
+echo " returns crc for file"
+exit
+return
+fi
+cat $1 | tr [a-z] [A-Z] | tr '\n' ' ' | xargs > /tmp/pooma
+sed -i 's/ /+/g' /tmp/pooma
+POOP=$(echo "obase=16;ibase=16;$(cat /tmp/pooma)" | bc) ; echo ${POOP: -2}
+
+

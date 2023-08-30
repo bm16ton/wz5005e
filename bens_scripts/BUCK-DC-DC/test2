@@ -1,0 +1,10 @@
+#!/bin/bash
+while read -r line
+do
+	name=$line
+	echo $line | xxd -r -p - > /dev/ttyUSB0
+#	BIN=$(echo "obase=2; ibase=16; $line" | bc ) > /dev/ttyUSB0
+#	echo -en $line | tr -d ' ' > /dev/ttyUSB0
+#	sleep 1
+done < $1
+

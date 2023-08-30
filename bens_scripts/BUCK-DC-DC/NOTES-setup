@@ -1,0 +1,22 @@
+stty -F /dev/tty63 raw      ? test
+stty -F /dev/tty63 9600
+stty -F /dev/tty63 -isig -icanon -echo
+sudo socat PTY,link=/dev/tty63 TCP:192.168.1.17:23
+sudo chmod aou+wrx /dev/tty63
+
+## You want;
+speed 9600 baud; line = 0;
+min = 1; time = 0;
+-brkint -icrnl -imaxbel
+-opost
+-isig -icanon -echo
+
+xxd -r -p raw2 > /dev/ttyUSB0
+xxd -r -p raw2 > /dev/ttyUSB0
+
+cat /dev/ttyUSB0 | xxd -l 128 -c 10 -ps
+
+
+cp set-to-3v-hex pooma
+cat pooma | xxd -b | awk '{print $2} {print $3} {print $4} {print $5} {print $6} {print $7}' > pooma1
+cat pooma1 | tr '\n' ' ' > pooma

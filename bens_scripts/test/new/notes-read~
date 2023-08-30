@@ -1,0 +1,30 @@
+AA 01 2B   14 50        12 AB          05 78         00 04           00 00        A0 42   02 4A     00 00       A6
+          "ovp"      "ocp amps"     "curr volt"   "curr set amp"   out amps?        ?     lvp    ?out amps?    ?41026?
+
+
+after bootup requires raw2  first before will work
+init with;
+xxd -r -p raw2 > /dev/ttyUSB0
+
+read values with;
+xxd -r -p raw11 > /dev/ttyUSB0
+
+tests
+/test2 raw3 | hexdump -C
+
+aa011280000000000000             ALL GOOD CONFIRMATION?
+0000000000000000003d
+CRC
+
+save cp of good file
+cp ../../set-to-4v-hex ./
+put all on one line
+cat set-to-4v-hex | tr '\n' ' ' > setnew
+remove all 00
+sed -i 's/ 00//g' set-new
+
+READING SERIAL;
+cat /dev/ttyUSB0 | xxd -l 128 -c 10
+cat /dev/ttyUSB0 | xxd -l 128 -c 10 -p
+
+
