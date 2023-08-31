@@ -1,4 +1,4 @@
-A esp8266 firmware to control the wz5005 (small no builtin psu nor wifi support model, other may work to, untested) Currently the on/off button on page acts like a hardware switch in debounce. I have no idea how or why but every button on the on/off will cause random amounts of clicks sometimes 12 sometimes 50. noway to know if itll land on on or off.
+A esp8266 firmware to control the wz5005 (small no builtin psu nor wifi support model, other may work to, untested) Currently the on/off button on page acts like a hardware switch in debounce. I have no idea how or why but every button on the on/off will cause random amounts of clicks sometimes 12 sometimes 50. noway to know if itll land on on or off. ok shit accidently uploaded realy old version, can only find a newish version will hopefully find/recreate something soonish. uploaded newish version for now.
 
 Original firmwaaree was for dps500X series with totally different protocol, can be found here.  https://github.com/zsellera/dps-wifi
 

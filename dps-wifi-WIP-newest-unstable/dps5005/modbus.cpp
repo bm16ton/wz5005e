@@ -5,6 +5,7 @@
 
 uint16_t modbus_crc16(uint8_t *buf, int len)
 {  
+  /*
   uint16_t crc = 0xFFFF;
   for (int pos = 0; pos < len; pos++)
   {
@@ -19,12 +20,12 @@ uint16_t modbus_crc16(uint8_t *buf, int len)
       crc >>= 1;                    // Just shift right
     }
   }
-
-  return crc;
+*/
+  return 0;
 }
 
 bool modbus_read_regs(uint16_t reg_addr, uint8_t n, void *dest) {
-  uint8_t request[] = {SLAVE_UNIT_ID, READ_HOLDING_REG, reg_addr >> 8, reg_addr & 0xff, 0x00, n, 0x00, 0x00};
+/*  uint8_t request[] = {SLAVE_UNIT_ID, READ_HOLDING_REG, reg_addr >> 8, reg_addr & 0xff, 0x00, n, 0x00, 0x00};
   uint16_t crc16 = modbus_crc16(request, 6);
   request[6] = crc16 & 0xff;
   request[7] = crc16 >> 8;
@@ -48,11 +49,12 @@ bool modbus_read_regs(uint16_t reg_addr, uint8_t n, void *dest) {
       delay(10);
     }
   }
-  return false;
+  */
+  return true;
 }
 
 bool modbus_write_reg(uint16_t reg_addr, const uint16_t value) {
-  uint8_t request[] = {SLAVE_UNIT_ID, WRITE_SINGLE_REG, reg_addr >> 8, reg_addr & 0xff, value >> 8, value & 0xff, 0x00, 0x00};
+/*  uint8_t request[] = {SLAVE_UNIT_ID, WRITE_SINGLE_REG, reg_addr >> 8, reg_addr & 0xff, value >> 8, value & 0xff, 0x00, 0x00};
   uint16_t crc16 = modbus_crc16(request, 6);
   request[6] = crc16 & 0xff;
   request[7] = crc16 >> 8;
@@ -73,10 +75,12 @@ bool modbus_write_reg(uint16_t reg_addr, const uint16_t value) {
       delay(10);
     }
   }
-  return false;
+  */
+  return true;
 }
 
 bool modbus_write_regs(uint16_t start_reg_addr, uint8_t n, const uint16_t values[]) {
+  /*
   uint8_t request[9+2*n];
   const uint8_t header[] = {SLAVE_UNIT_ID, WRITE_MULTIPLE_REGS, start_reg_addr >> 8, start_reg_addr & 0xff, 0x00, n, 2*n};
   memcpy(request, header, 7);
@@ -104,6 +108,6 @@ bool modbus_write_regs(uint16_t start_reg_addr, uint8_t n, const uint16_t values
       delay(10);
     }
   }
-  return false;
+  */
+  return true;
 }
-

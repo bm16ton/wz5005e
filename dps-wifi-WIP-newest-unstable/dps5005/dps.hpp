@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 #define MIN_VOLTAGE 0
-#define MAX_VOLTAGE 5000
+#define MAX_VOLTAGE 15000
 #define MIN_CURRENT 0
 #define MAX_CURRENT 4999
 
