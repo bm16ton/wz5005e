@@ -32,7 +32,7 @@ h1 { font-size: 2.0em; font-stretch: extra-expanded; text-transform: uppercase; 
           </div>
         </div>
 
-        <div class="col align-items-start metrics">
+        <div class="col status text-center">
             <div class="col onoff">
                 <button type="button" id="onoff" class="btn btn-primary">output ON</button>
             </div>
@@ -45,7 +45,7 @@ h1 { font-size: 2.0em; font-stretch: extra-expanded; text-transform: uppercase; 
         <div class="row">
             <div class="col status text-center">
                 CV/CC:  <strong id="cvcc">n/a</strong> |
-                POWER:  <strong id="power">n/a W</strong> |
+                TEMP:  <strong id="temp">n/a W</strong> |
                 U-IN: <strong id="uin">n/a V</strong> |
                 LOCK:  <strong id="lock">n/a</strong> |
                 PROTECT:  <strong id="protect">n/a</strong>
@@ -140,7 +140,7 @@ function turnOn() {
 }
 
 function turnOff() {
-    $.get("/offon", {'v': 0});
+    $.get("/offon", {'v': 1});
 }
 
 $('#uset').change(function() {
@@ -169,13 +169,13 @@ function periodicUpdate() {
                 $("#onoff").click(turnOn);
             } 
 
-            if (data.offon) {
+            if (!data.offon) {
                 $("#offon").text("output OFF");
                 $("#offon").click(turnOff);
             }
 
             $("#cvcc").text(data.cvcc==0?"CV":"CC");
-            $("#power").text((data.power/100).toFixed(2) + " W");
+            $("#temp").text((data.temp).toFixed(2) + " W");
             $("#uin").text((data.uin/100).toFixed(2) + " V");
             $("#lock").text(data.lock?"on":"off");
             $("#protect").text(data.protect?"on":"off");
